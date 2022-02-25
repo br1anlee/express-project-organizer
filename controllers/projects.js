@@ -19,8 +19,13 @@ router.post('/', (req, res) => {
 })
 
 // GET /projects/new - display form for creating a new project
-router.get('/new', (req, res) => {
-  res.render('projects/new')
+router.get('/new', async (req, res) => {
+  try {
+    const categoryInput = await db.project.findAll()
+    res.render('projects/new', {category: categoryInput})
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 // GET /projects/:id - display a specific project
